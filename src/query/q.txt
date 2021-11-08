@@ -1,0 +1,38 @@
+Q1: Manipulation
+{
+  viewer{
+    repositories(first:2 orderBy:{field:CREATED_AT,direction:DESC}){
+      totalCount,
+      nodes{
+        name,
+        description,
+        id
+      }
+    }
+  }
+}
+
+Q2: Pagination
+
+{
+  viewer {
+    repositories(first: 2, orderBy: {field: CREATED_AT, direction: DESC}) {
+      totalCount
+      edges {
+        node {
+          name
+          description
+          id
+        }
+        cursor
+      }
+      pageInfo {
+        hasPreviousPage
+        hasNextPage
+        startCursor
+        endCursor
+      }
+    }
+  }
+}
+
