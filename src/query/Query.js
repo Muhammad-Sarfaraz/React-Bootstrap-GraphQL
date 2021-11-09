@@ -75,31 +75,76 @@
 
 // export default githubQuery;
 
-const githubQuery = (pageCount, queryString) => {
+// const githubQuery = (pageCount, queryString) => {
+//   return {
+//     query: `
+//     {
+//       viewer {
+//         name
+//       }
+//       search(query: "${queryString}user:Muhammad-Sarfaraz sort:updated-desc",type:REPOSITORY,first:${pageCount}){
+//         repositoryCount
+//         nodes{
+//               ... on Repository{
+//                   name
+//                   description
+//                   id
+//                   url
+//                   viewerSubscription
+//                   licenseInfo{
+//                       spdxId
+//                   }
+//               }
+//           }
+//       }
+
+//     }`
+//   }
+// }
+
+// export default githubQuery
+
+// pagination
+const githubQuery = (
+  pageCount,
+  queryString,
+  paginationKeyword,
+  paginationString,
+  githubUserName
+) => {
   return {
     query: `
     {
       viewer {
         name
       }
-      search(query: "${queryString}user:Muhammad-Sarfaraz sort:updated-desc",type:REPOSITORY,first:${pageCount}){
-        repositoryCount  
-        nodes{
-              ... on Repository{
-                  name
-                  description
-                  id
-                  url
-                  viewerSubscription
-                  licenseInfo{
-                      spdxId
-                  }
+      search(query: "${queryString} user:${githubUserName} sort:updated-desc", type: REPOSITORY, ${paginationKeyword}: ${pageCount}, ${paginationString}) {
+        repositoryCount
+        edges {
+          cursor
+          node {
+            ... on Repository {
+              name
+              description
+              id
+              url
+              viewerSubscription
+              licenseInfo {
+                spdxId
               }
+            }
           }
+        }
+        pageInfo {
+          startCursor
+          endCursor
+          hasNextPage
+          hasPreviousPage
+        }
       }
-  
-    }`
-  }
-}
+    }
+  `,
+  };
+};
 
-export default githubQuery
+export default githubQuery;
