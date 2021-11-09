@@ -3,10 +3,26 @@ const SearchBox = ({
   pageCount,
   queryString,
   onTotalChange,
-  onQueryChange
+  onQueryChange,
+  githubUserName,
+  onGithubUserNameChange
 }) => {
   return (
     <div className='d-flex align-items-center bg-light px-3 py-2 small rounded-3'>
+      <div className='d-flex align-items-center flex-grow-1'>
+        <label htmlFor='queryString' className='me-2 fw-bold text-secondary'>
+          UserName
+        </label>
+        <input
+          id='githubUserName'
+          className='form-control form-control-sm me-2'
+          type='text'
+          value={githubUserName}
+          onChange={event => {
+            onGithubUserNameChange(event.target.value)
+          }}
+        />
+      </div>
       <div className='d-flex align-items-center flex-grow-1'>
         <label htmlFor='queryString' className='me-2 fw-bold text-secondary'>
           Search
@@ -16,10 +32,9 @@ const SearchBox = ({
           className='form-control form-control-sm me-2'
           type='text'
           value={queryString}
-          onChange={(event)=>{
+          onChange={event => {
             onQueryChange(event.target.value)
           }}
-
         />
       </div>
       <div className='d-flex align-items-center'>
@@ -33,10 +48,9 @@ const SearchBox = ({
           min='1'
           max='100'
           value={pageCount}
-          onChange={(event)=>{
+          onChange={event => {
             onTotalChange(event.target.value)
-        }}
-          
+          }}
         />
       </div>
       <div>
